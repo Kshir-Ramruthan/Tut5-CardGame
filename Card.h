@@ -17,7 +17,7 @@ class Card
 		void print();
 
 		//Default constructor
-		Card(std::string colo, int number);
+		Card(std::string colo="", int number=0);
 
 		//Default destructor
 		~Card();
