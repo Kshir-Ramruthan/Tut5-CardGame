@@ -12,22 +12,26 @@ private:
 	Card *deck = new Card[size];
 
 public:
-	Card reset()
+	//Default constructor
+	DeckOfCards()
+	{
+		reset();
+	}
+
+	void reset()
 	{
 		size = 20;
-		Card newDeck[20];
 		for (int i = 0; i < size;i++)
 		{
-			if (size < 10)
+			if (i < 10)
 			{
-				newDeck[i] = Card("red",i+1);
+				deck[i] = Card("red",i+1);
 			}//End if
 			else
 			{
-				newDeck[i] = Card("black", i - 9);
+				deck[i] = Card("black", i - 9);
 			}//End else
-		}//End for
-		return *newDeck;                                          //Possible error
+		}//End for                               
 	}//End reset
 
 	void shuffle()
@@ -37,8 +41,8 @@ public:
 			Card temp;
 			for (int i = 0; i < 50; i++)
 			{
-				int pos1 = (rand() % 49) + 0;
-				int pos2 = (rand() % 49) + 0;
+				int pos1 = (rand() % (size)) + 0;
+				int pos2 = (rand() % (size)) + 0;
 
 				temp = deck[pos1];
 				deck[pos1] = deck[pos2];
@@ -53,14 +57,15 @@ public:
 
 	Card draw()
 	{
-		Card drawn = deck[size-1];
+		Card drawn = deck[(size-1)];
 		size = size - 1;
 		Card *deck2 = new Card[size];
 
-		memcpy(deck2,deck,sizeof(Card));
+		memcpy(deck2,deck,size*sizeof(Card));
 
-		delete deck;
-		deck = deck2;
+		delete[] deck;
+		Card *deck = new Card[size];
+		memcpy(deck, deck2, size*sizeof(Card));
 
 		return drawn;
 	}//End draw
@@ -68,6 +73,7 @@ public:
 	Card peek()
 	{
 		Card drawn = deck[size - 1];
+
 		return drawn;
 	}//End peek
 
@@ -76,3 +82,16 @@ public:
 		return size;
 	}//End numberOfCards
 };
+
+int main()
+{
+	DeckOfCards obj;
+	obj.peek().print();
+	obj.shuffle();
+	obj.peek().print();
+	obj.draw().print();
+	obj.peek().print();
+	cout << obj.numberOfCards() << endl;
+
+	return 1;
+}
