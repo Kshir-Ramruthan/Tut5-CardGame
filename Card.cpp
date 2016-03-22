@@ -17,7 +17,7 @@ using namespace std;
 
 	void Card::print()
 	{
-		cout << col << num << endl;
+		cout << "Card is: " <<col << " " << num << endl;
 	}//End print
 
 	//Default constructor
@@ -26,3 +26,9 @@ using namespace std;
 		col = colo;
 		num = number;
 	}//End Constructor
+
+	//Default destructor
+	Card::~Card()
+	{
+	
+	}//End Destructor
